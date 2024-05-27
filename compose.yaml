@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  file-reader:
+    build:
+      context: ./file-reader
+      dockerfile: Dockerfile
+    container_name: file-reader
+    networks:
+      - script-scan-network
+    ports:
+      - "8001:8001" # host_port:container_port
+    volumes:
+      - ./file-reader/src:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  script-scanner:
+    build:
+      context: ./script-scanner
+      dockerfile: Dockerfile
+    container_name: script-scanner
+    networks:
+      - script-scan-network
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./script-scanner/src:/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8002/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      
+
+  orchestrator:
+    build:
+      context: ./orchestrator
+      dockerfile: Dockerfile
+    container_name: orchestrator
+    volumes:
+      - ./orchestrator/src:/app 
+    networks:
+      - script-scan-network
+    ports:
+      - "8000:8000"
+    depends_on:
+      - file-reader
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+networks:
+  script-scan-network:
+    driver: bridge
+
+
