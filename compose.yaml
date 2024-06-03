@@ -1,35 +1,35 @@
 version: '2.27'
 
-services:
-  file-reader:
-    build:
-      context: ./file_reader
-      dockerfile: Dockerfile
-    container_name: file_reader
-    ports:
-      - "8001:8001" # host_port:container_port
-    volumes:
-      - ./file_reader/file_reader:/app
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8001/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+# services:
+#   file-reader:
+#     build:
+#       context: ./file_reader
+#       dockerfile: Dockerfile
+#     container_name: file_reader
+#     ports:
+#       - "8001:8001" # host_port:container_port
+#     volumes:
+#       - ./file_reader/file_reader:/app
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:8001/"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 3
 
-  script-scanner:
-    build:
-      context: ./script_scanner
-      dockerfile: Dockerfile
-    container_name: script_scanner
-    ports:
-      - "8002:8002"
-    volumes:
-      - ./script_scanner/script_scanner:/app
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8002/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+  # script-scanner:
+  #   build:
+  #     context: ./script_scanner
+  #     dockerfile: Dockerfile
+  #   container_name: script_scanner
+  #   ports:
+  #     - "8002:8002"
+  #   volumes:
+  #     - ./script_scanner/script_scanner:/app
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8002/"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
 
   uploder:
     build: 
@@ -65,20 +65,20 @@ services:
       timeout: 10s
       retries: 3
 
-  orm:
-    build:
-      context: ./orm
-      dockerfile: Dockerfile
-    container_name: orm
-    ports:
-      - "8003:8003"
-    volumes:
-      - ./orm/orm:/app
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8003/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+  # orm:
+  #   build:
+  #     context: ./orm
+  #     dockerfile: Dockerfile
+  #   container_name: orm
+  #   ports:
+  #     - "8003:8003"
+  #   volumes:
+  #     - ./orm/orm:/app
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8003/"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
 
 
   postgresql:
